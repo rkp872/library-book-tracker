@@ -17,4 +17,6 @@ public interface BookService {
 
     void deleteBook(Long id); // Delete a book by ID
 
+    String fetchBookDetails(String query);
+
 }

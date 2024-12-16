@@ -57,4 +57,9 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.ok("Book deleted successfully");
     }
+
+    @GetMapping("/search")
+    public String searchBooks(@RequestParam String query){
+        return bookService.fetchBookDetails(query);
+    }
 }

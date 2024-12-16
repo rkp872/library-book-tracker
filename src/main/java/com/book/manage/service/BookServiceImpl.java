@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.book.manage.model.Book;
 import com.book.manage.repository.BookRepository;
@@ -16,6 +17,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public Book createBook(Book book) {
@@ -50,6 +54,14 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Long id) {
         Book book=bookRepository.findById(id).orElseThrow(()->new RuntimeException("Book not found with id : "+id));
         bookRepository.delete(book);
+    }
+
+    @Override
+    public String fetchBookDetails(String query) {
+        String url = "https://www.googleapis.com/books/v1/volumes?q=" + query;
+        String response=restTemplate.getForObject(url, String.class);
+
+        return response;
     }
 
 }
