@@ -3,6 +3,9 @@ package com.book.manage.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.book.manage.model.Book;
@@ -25,8 +28,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public Page<Book> getAllBooks(int page,int size, String sortBy) {
+        return bookRepository.findAll(PageRequest.of(page,size,Sort.by(sortBy)));
     }
 
     @Override
